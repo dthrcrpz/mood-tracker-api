@@ -73,7 +73,7 @@ class UserController extends Controller
         $token = $user->createToken('MoodTracker API Grant')->accessToken;
 
         return response([
-        	'token' => $token->accessToken
+        	'token' => $token
         ]);
     }
 
