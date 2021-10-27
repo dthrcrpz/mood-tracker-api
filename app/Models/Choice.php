@@ -11,6 +11,7 @@ class Choice extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['created_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function question () {
         return $this->belongsTo(Question::class);

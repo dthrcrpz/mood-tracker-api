@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function login (Request $r) {
-		$validator = \Validator::make($r->all(), [
+		$validator = Validator::make($r->all(), [
             'email' => 'required',
             'password' => 'required',
         ]);
@@ -21,7 +22,6 @@ class UserController extends Controller
         }
 
         $user = User::where('email', $r->email)
-        ->where('type', 'user')
         ->first();
 
         if ($user) {
@@ -49,7 +49,7 @@ class UserController extends Controller
     }
 
     public function register (Request $r) {
-    	$validator = \Validator::make($r->all(), [
+    	$validator = Validator::make($r->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email|unique:users',
