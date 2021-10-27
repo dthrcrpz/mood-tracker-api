@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Dummy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -124,6 +125,14 @@ class DummyController extends Controller
 
         return response([
             'message' => 'Product deleted'
+        ]);
+    }
+
+    public function tagsIndex () {
+        $tags = Tag::all();
+
+        return response([
+            'tags' => $tags
         ]);
     }
 }

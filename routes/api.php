@@ -20,6 +20,8 @@ Route::group(['prefix' => 'questions'], function () {
 Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
     Route::get('banner-data', 'DummyController@getBannerData');
     Route::patch('banner-data', 'DummyController@updateBannerData');
+    
+    Route::get('tags', 'DummyController@tagsIndex');
 
     Route::group(['prefix' => 'products'], function () {
         Route::get('/', 'DummyController@productIndex');
