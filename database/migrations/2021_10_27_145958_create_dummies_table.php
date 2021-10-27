@@ -15,13 +15,11 @@ class CreateDummiesTable extends Migration
     {
         Schema::create('dummies', function (Blueprint $table) {
             $table->id();
-            $table->string('banner_image')->nullable();
             $table->string('banner_title')->nullable();
-            $table->string('banner_description')->nullable();
+            $table->longText('banner_description')->nullable();
 
             $table->string('product_name')->nullable();
-            $table->string('product_description')->nullable();
-            $table->string('product_image')->nullable();
+            $table->longText('product_description')->nullable();
             $table->decimal('product_price', 9, 2)->nullable();
             $table->boolean('product_featured')->default(0);
             

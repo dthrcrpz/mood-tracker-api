@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ModelWithImages;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Dummy extends Model
+class Dummy extends ModelWithImages
 {
     use HasFactory, SoftDeletes;
+
+    public $modelName = 'dummy';
 
     protected $guarded = ['created_at'];
 }
