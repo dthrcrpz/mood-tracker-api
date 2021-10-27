@@ -82,7 +82,7 @@ class DummyController extends Controller
     }
 
     public function showProduct (Dummy $product) {
-        $product->load('images');
+        $product->load('images', 'tags');
 
         return response([
             'product' => $product
