@@ -13,4 +13,8 @@ class Dummy extends ModelWithImages
     public $modelName = 'dummy';
 
     protected $guarded = ['created_at'];
+
+    public function tags () {
+        return $this->belongsToMany(Tag::class);
+    }
 }

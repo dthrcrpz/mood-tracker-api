@@ -38,7 +38,8 @@ class DummyController extends Controller
     public function productIndex () {
         $products = Dummy::where('id', '!=', 1)
         ->with([
-            'images'
+            'images',
+            'tags'
         ])
         ->paginate(20);
 
