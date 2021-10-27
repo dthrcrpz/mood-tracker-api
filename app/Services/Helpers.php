@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * [addImages description]
- * @param [string] $type  Name of the model in kebab case. Make it singular (e.g. product-variant, customer-detail)
+ * @param [string] $modelName  Name of the model in kebab case. Make it singular (e.g. product-variant, customer-detail)
  * @param [object/array] $r     [The Request object. It contains the images]
  * @param [Model instance] $model [Model!!!]
  */
-function addImages ($type, $r, $model) {
-    $existingImagesCount = $model->images($type)->count();
+function addImages ($modelName, $r, $model) {
+    $existingImagesCount = $model->images($modelName)->count();
     foreach ($r->file as $key => $image) {
         $proceed = true;
 
@@ -23,7 +23,7 @@ function addImages ($type, $r, $model) {
                 'path' => $uploadedImage->path,
                 'path_resized' => $uploadedImage->path_resized,
                 'category' => (isset($r->file_category)) ? $r->file_category[$key] : null,
-                'type' => $type,
+                'model_name' => $modelName,
                 'file_name' => $uploadedImage->original_file_name,
                 'file_size' => $uploadedImage->file_size
             ];
@@ -32,8 +32,8 @@ function addImages ($type, $r, $model) {
     }
 }
 
-function updateImages ($type, $r, $model) {
-    $existingImagesCount = $model->images($type)->count();
+function updateImages ($modelName, $r, $model) {
+    $existingImagesCount = $model->images($modelName)->count();
 
     if ($r->file_id) {
         foreach ($r->file_id as $key => $image_id) {
@@ -47,7 +47,7 @@ function updateImages ($type, $r, $model) {
                     'path' => $uploadedImage->path,
                     'path_resized' => $uploadedImage->path_resized,
                     'category' => (isset($r->file_category)) ? $r->file_category[$key] : null,
-                    'type' => $type,
+                    'model_name' => $modelName,
                     'file_name' => $uploadedImage->original_file_name,
                     'file_size' => $uploadedImage->file_size
                 ];

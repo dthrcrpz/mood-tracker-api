@@ -16,3 +16,8 @@ Route::group(['prefix' => 'questions'], function () {
     Route::patch('{question}', 'QuestionController@update')->middleware('auth.admin');
     Route::delete('{question}', 'QuestionController@destroy')->middleware('auth.admin');
 });
+
+Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
+    Route::get('banner-data', 'DummyController@getBannerData');
+    Route::patch('banner-data', 'DummyController@updateBannerData');
+});

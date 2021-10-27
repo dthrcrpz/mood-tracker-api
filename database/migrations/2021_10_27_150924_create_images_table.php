@@ -21,7 +21,7 @@ class CreateImagesTable extends Migration
             $table->string('category')->nullable();
             $table->string('path');
             $table->string('path_resized');
-            $table->string('type')->nullable();
+            $table->string('model_name')->nullable();
             $table->integer('sequence')->nullable();
             $table->string('temporary_id')->nullable();
             $table->string('file_name')->nullable();
