@@ -67,7 +67,13 @@ class DummyController extends Controller
             'product_price' => $r->product_price,
         ]);
 
-        addImages('dummy', $r, $product);
+        if ($r->file) {
+            addImages('dummy', $r, $product);
+        }
+
+        foreach ($r->tag as $key => $tag) {
+            $product->tags()->attach($tag);
+        }
 
         return response([
             'product' => $product
@@ -102,6 +108,11 @@ class DummyController extends Controller
         ]);
 
         updateImages('dummy', $r, $product);
+
+        $product->tags()->detach();
+        foreach ($r->tag as $key => $tag) {
+            $product->tags()->attach($tag);
+        }
 
         return response([
             'product' => $product
