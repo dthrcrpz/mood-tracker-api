@@ -20,4 +20,12 @@ Route::group(['prefix' => 'questions'], function () {
 Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
     Route::get('banner-data', 'DummyController@getBannerData');
     Route::patch('banner-data', 'DummyController@updateBannerData');
+
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('/', 'DummyController@productIndex');
+        Route::post('/', 'DummyController@storeProduct');
+        Route::get('{product}', 'DummyController@showProduct');
+        Route::patch('{product}', 'DummyController@updateProduct');
+        Route::delete('{product}', 'DummyController@destroyProduct');
+    });
 });
