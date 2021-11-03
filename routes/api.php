@@ -27,6 +27,8 @@ Route::group(['prefix' => 'scoring-settings'], function () {
     Route::delete('{scoringSetting}', 'ScoringSettingController@destroy')->middleware('auth.admin');
 });
 
+Route::post('tracker/submit', 'QuestionController@submit')->middleware('auth.api');
+
 Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
     Route::get('banner-data', 'DummyController@getBannerData');
     Route::patch('banner-data', 'DummyController@updateBannerData');

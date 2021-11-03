@@ -108,4 +108,8 @@ class QuestionController extends Controller
             'message' => 'Question deleted'
         ]);
     }
+
+    public function submit (Request $r) {
+        return $r;
+    }
 }
