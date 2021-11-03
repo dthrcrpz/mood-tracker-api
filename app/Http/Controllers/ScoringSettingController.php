@@ -20,6 +20,7 @@ class ScoringSettingController extends Controller
         $validator = Validator::make($r->all(), [
             'score' => 'required',
             'result' => 'required',
+            'remarks' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -31,6 +32,7 @@ class ScoringSettingController extends Controller
         $scoringSetting = ScoringSetting::create([
             'score' => $r->score,
             'result' => $r->result,
+            'remarks' => $r->remarks
         ]);
 
         return response([
@@ -48,6 +50,7 @@ class ScoringSettingController extends Controller
         $validator = Validator::make($r->all(), [
             'score' => 'required',
             'result' => 'required',
+            'remarks' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +62,7 @@ class ScoringSettingController extends Controller
         $scoringSetting->update([
             'score' => $r->score,
             'result' => $r->result,
+            'remarks' => $r->remarks
         ]);
 
         return response([
