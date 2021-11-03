@@ -56,7 +56,7 @@ class ScoringSettingController extends Controller
             ], 400);
         }
 
-        $scoringSetting = ScoringSetting::create([
+        $scoringSetting->update([
             'score' => $r->score,
             'result' => $r->result,
         ]);

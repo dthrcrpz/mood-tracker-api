@@ -17,7 +17,7 @@ Route::group(['prefix' => 'questions'], function () {
     Route::delete('{question}', 'QuestionController@destroy')->middleware('auth.admin');
 });
 
-Route::group(['prefix' => 'scoring-setting'], function () {
+Route::group(['prefix' => 'scoring-settings'], function () {
     Route::get('/', 'ScoringSettingController@index')->middleware('auth.api');
     Route::post('/', 'ScoringSettingController@store')->middleware('auth.admin');
     Route::get('{scoringSetting}', 'ScoringSettingController@show')->middleware('auth.api');
