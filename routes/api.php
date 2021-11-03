@@ -17,6 +17,14 @@ Route::group(['prefix' => 'questions'], function () {
     Route::delete('{question}', 'QuestionController@destroy')->middleware('auth.admin');
 });
 
+Route::group(['prefix' => 'scoring-setting'], function () {
+    Route::get('/', 'ScoringSettingController@index')->middleware('auth.api');
+    Route::post('/', 'ScoringSettingController@store')->middleware('auth.admin');
+    Route::get('{scoringSetting}', 'ScoringSettingController@show')->middleware('auth.api');
+    Route::patch('{scoringSetting}', 'ScoringSettingController@update')->middleware('auth.admin');
+    Route::delete('{scoringSetting}', 'ScoringSettingController@destroy')->middleware('auth.admin');
+});
+
 Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
     Route::get('banner-data', 'DummyController@getBannerData');
     Route::patch('banner-data', 'DummyController@updateBannerData');
