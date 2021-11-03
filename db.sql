@@ -245,7 +245,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +254,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2016_06_01_000001_create_oauth_auth_codes_table',1),(4,'2016_06_01_000002_create_oauth_access_tokens_table',1),(5,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(6,'2016_06_01_000004_create_oauth_clients_table',1),(7,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(8,'2019_08_19_000000_create_failed_jobs_table',1),(9,'2019_12_14_000001_create_personal_access_tokens_table',1),(10,'2021_10_27_013637_create_questions_table',2),(11,'2021_10_27_014021_create_choices_table',3),(16,'2021_10_27_014600_create_answer_groups_table',4),(17,'2021_10_27_014601_create_answers_table',4),(22,'2021_10_27_145958_create_dummies_table',5),(23,'2021_10_27_150924_create_images_table',5),(25,'2021_10_27_163803_create_tags_table',6),(26,'2021_10_27_164203_create_dummy_tags_table',6);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2016_06_01_000001_create_oauth_auth_codes_table',1),(4,'2016_06_01_000002_create_oauth_access_tokens_table',1),(5,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(6,'2016_06_01_000004_create_oauth_clients_table',1),(7,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(8,'2019_08_19_000000_create_failed_jobs_table',1),(9,'2019_12_14_000001_create_personal_access_tokens_table',1),(10,'2021_10_27_013637_create_questions_table',2),(11,'2021_10_27_014021_create_choices_table',3),(16,'2021_10_27_014600_create_answer_groups_table',4),(17,'2021_10_27_014601_create_answers_table',4),(22,'2021_10_27_145958_create_dummies_table',5),(23,'2021_10_27_150924_create_images_table',5),(25,'2021_10_27_163803_create_tags_table',6),(26,'2021_10_27_164203_create_dummy_tags_table',6),(27,'2021_11_03_133118_create_scoring_settings_table',7);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,6 +490,33 @@ INSERT INTO `questions` VALUES (1,'Do you feel like killing someone today?',1,NU
 UNLOCK TABLES;
 
 --
+-- Table structure for table `scoring_settings`
+--
+
+DROP TABLE IF EXISTS `scoring_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `scoring_settings` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `score` decimal(9,2) NOT NULL,
+  `result` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scoring_settings`
+--
+
+LOCK TABLES `scoring_settings` WRITE;
+/*!40000 ALTER TABLE `scoring_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `scoring_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tags`
 --
 
@@ -546,7 +573,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'John','Doe','John Doe','johndoe@email.com',NULL,'$2y$10$jwo4kBfHr4.qaWmpmA6Kpec3T4jxTQo2XLH89CYKFzfv7FwxwO29i','user',NULL,NULL,'2021-10-07 03:20:14','2021-10-07 03:20:14'),(4,'Admin','Admin','Admin Admin','admin@admin.com',NULL,'$2y$10$AihdPmw1u1vjhsNF/7flbOO4Gg7vnNDbvY/PiYO/4YT9eWv9XJOfG','admin',NULL,NULL,'2021-10-07 04:57:29','2021-10-07 04:57:29');
+INSERT INTO `users` VALUES (1,'John','Doe','John Doe','johndoe@email.com',NULL,'$2y$10$jwo4kBfHr4.qaWmpmA6Kpec3T4jxTQo2XLH89CYKFzfv7FwxwO29i','user',NULL,NULL,'2021-10-07 03:20:14','2021-10-07 03:20:14'),(4,'Admin','Admin','Admin Admin','admin@admin.com',NULL,'$2y$10$0C93H8eKrS4zvhhVIefRFeMwgjJK/5wqSMYm7SBPCq4IP82JGjtpq','admin',NULL,NULL,'2021-10-07 04:57:29','2021-10-07 04:57:29');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -559,4 +586,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-28 13:13:37
+-- Dump completed on 2021-11-03 21:41:49
