@@ -7,6 +7,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('login', 'UserController@login');
     Route::post('logout', 'UserController@logout');
     Route::get('user', 'UserController@user')->middleware('auth.api');
+
+    Route::post('login/facebook', 'UserController@facebookLogin');
 });
 
 Route::group(['prefix' => 'questions'], function () {

@@ -40,7 +40,11 @@ class User extends Authenticatable
     ];
 
     public function setPasswordAttribute ($password) {
-        $this->attributes['password'] = bcrypt($password);
+        if (strpos($password, 'the-facebook-') !== false || strpos($password, 'the-google-') !== false) {
+            $this->attributes['password'] = $password;
+        } else {
+            $this->attributes['password'] = bcrypt($password);
+        }
     }
 
     public function answer_groups () {
