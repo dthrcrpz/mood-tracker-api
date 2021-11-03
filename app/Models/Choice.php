@@ -12,8 +12,13 @@ class Choice extends Model
 
     protected $guarded = ['created_at'];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $appends = ['selected'];
 
     public function question () {
         return $this->belongsTo(Question::class);
+    }
+
+    protected function getSelectedAttribute () {
+        return false;
     }
 }

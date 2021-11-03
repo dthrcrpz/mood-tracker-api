@@ -14,6 +14,10 @@ class QuestionController extends Controller
         ])
         ->get();
 
+        foreach ($questions as $key => $question) {
+            $question->active = ($key == 0) ? true : false;
+        }
+
         return response([
             'questions' => $questions
         ]);
