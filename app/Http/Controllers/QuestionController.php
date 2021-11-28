@@ -154,8 +154,6 @@ class QuestionController extends Controller
             }
         }
 
-        return response([
-            'result' => $result
-        ]);
+        return $result;
     }
 }
