@@ -199,4 +199,51 @@ class UserController extends Controller
             'message' => 'User logged out'
         ]);
     }
+
+    public function validatePasswordResetToken ($token) {
+        $user = User::where('reset_password_token', $token)->first();
+
+        if (!$user) {
+            return response([
+                'errors' => [
+                    'Invalid password reset token'
+                ]
+            ], 401);
+        }
+
+        return response([
+            'user' => $user
+        ]);
+    }
+
+    public function resetPassword (Request $r) {
+        $validator = Validator::make($r->all(), [
+            'password' => 'required|confirmed',
+            'token' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => $validator->errors()->all()
+            ], 400);
+        }
+
+        $user = User::where('reset_password_token', $r->token)->first();
+
+        if (!$user) {
+            return response([
+                'errors' => [
+                    'Invalid token'
+                ]
+            ], 401);
+        }
+
+        $user->update([
+            'password' => $r->password
+        ]);
+
+        return response([
+            'message' => 'Password has been reset'
+        ]);
+    }
 }

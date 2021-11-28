@@ -9,6 +9,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('user', 'UserController@user')->middleware('auth.api');
 
     Route::post('forgot-password', 'UserController@forgotPassword');
+    Route::post('validate-password-reset-token/{token}', 'UserController@validatePasswordResetToken');
+    Route::post('reset-password', 'UserController@resetPassword');
 
     Route::post('login/facebook', 'UserController@facebookLogin');
 });
