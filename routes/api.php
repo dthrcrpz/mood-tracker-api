@@ -28,6 +28,7 @@ Route::group(['prefix' => 'scoring-settings'], function () {
 });
 
 Route::post('tracker/submit', 'QuestionController@submit')->middleware('auth.api');
+Route::get('history', 'QuestionController@history')->middleware('auth.api');
 
 Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () {
     Route::get('banner-data', 'DummyController@getBannerData');

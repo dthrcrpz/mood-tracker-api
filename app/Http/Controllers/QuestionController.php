@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\AnswerGroup;
 use App\Models\Question;
 use App\Models\ScoringSetting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
+    public $scoringSettings;
+
+    public function __construct() {
+        $this->scoringSettings = ScoringSetting::orderByDesc('score')
+        ->get();
+    }
+
     public function index () {
         $questions = Question::with([
             'choices'
@@ -132,6 +140,23 @@ class QuestionController extends Controller
         ]);
     }
 
+    public function history (Request $r) {
+        $answerGroups = AnswerGroup::orderByDesc('created_at')
+        ->get();
+
+        $history = [];
+
+        foreach ($answerGroups as $key => $answerGroup) {
+            $result = $this->computeAnswerGroup($answerGroup);
+            $result->date = Carbon::parse($answerGroup->created_at)->format('(l) M d, Y - h:i A');
+            array_push($history, $result);
+        }
+
+        return response([
+            'history' => $history
+        ]);
+    }
+
     protected function computeAnswerGroup ($answerGroup) {
         $answerGroup->load([
             'answers.choice.question'
@@ -142,15 +167,11 @@ class QuestionController extends Controller
             $score += $answer->choice->score;
         }
 
-        $scoringSettings = ScoringSetting::orderByDesc('score')
-        ->get();
-
         $result = null;
 
-        foreach ($scoringSettings as $key => $scoringSetting) {
+        foreach ($this->scoringSettings as $key => $scoringSetting) {
             if ($score >= $scoringSetting->score) {
                 $result = $scoringSetting;
-                break;
             }
         }
 
