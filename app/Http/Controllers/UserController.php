@@ -71,6 +71,16 @@ class UserController extends Controller
     }
 
     public function forgotPassword (Request $r) {
+        $validator = Validator::make($r->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => $validator->errors()->all()
+            ], 400);
+        }
+
         $user = User::where('email', $r->email)->first();
 
         if (!$user) {
@@ -88,6 +98,10 @@ class UserController extends Controller
         ]);
 
         Mail::to($user->email)->queue(new ForgotPassword($user, $token));
+
+        return response([
+            'message' => 'Password reset link sent'
+        ]);
     }
 
     public function login (Request $r) {

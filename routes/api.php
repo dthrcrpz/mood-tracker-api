@@ -8,7 +8,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('logout', 'UserController@logout');
     Route::get('user', 'UserController@user')->middleware('auth.api');
 
-    Route::post('forgot-password', 'UserController@forgotPassword')->middleware('auth.api');
+    Route::post('forgot-password', 'UserController@forgotPassword');
 
     Route::post('login/facebook', 'UserController@facebookLogin');
 });
@@ -45,4 +45,8 @@ Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () 
         Route::patch('{product}', 'DummyController@updateProduct');
         Route::delete('{product}', 'DummyController@destroyProduct');
     });
+});
+
+Route::get('mails-test/{view}', function ($view) {
+    return view("mails.$view");
 });
