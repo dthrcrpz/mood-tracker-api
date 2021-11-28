@@ -112,9 +112,6 @@ class QuestionController extends Controller
     }
 
     public function submit (Request $r) {
-        $answerGroup = AnswerGroup::first();
-        return $this->computeAnswerGroup($answerGroup);
-
         $user = $r->user();
         $answerGroup = $user->answer_groups()->create();
 
@@ -145,11 +142,20 @@ class QuestionController extends Controller
             $score += $answer->choice->score;
         }
 
-        $scoringSettings = ScoringSetting::orderBy('score')
+        $scoringSettings = ScoringSetting::orderByDesc('score')
         ->get();
 
-        return $scoringSettings;
+        $result = null;
 
-        return $answerGroup;
+        foreach ($scoringSettings as $key => $scoringSetting) {
+            if ($score >= $scoringSetting->score) {
+                $result = $scoringSetting;
+                break;
+            }
+        }
+
+        return response([
+            'result' => $result
+        ]);
     }
 }
