@@ -136,7 +136,7 @@ class QuestionController extends Controller
         }
 
         return response([
-            'result' => $this->computeAnswerGroup($answerGroup)
+            'result' => $this->computeAnswerGroup($answerGroup)['result']
         ]);
     }
 
@@ -148,7 +148,8 @@ class QuestionController extends Controller
 
         foreach ($answerGroups as $key => $answerGroup) {
             $result = $this->computeAnswerGroup($answerGroup);
-            $result->date = Carbon::parse($answerGroup->created_at)->format('(l) M d, Y - h:i A');
+            // $result->date = $answerGroup->created_at;
+            // $result->date = Carbon::parse($answerGroup->created_at)->format('(l) M d, Y - h:i A');
             array_push($history, $result);
         }
 
@@ -175,6 +176,11 @@ class QuestionController extends Controller
             }
         }
 
-        return $result;
+        $date = Carbon::parse($answerGroup->created_at)->format('(l) M d, Y - h:i A');
+
+        return [
+            'result' => $result,
+            'date' => $date
+        ];
     }
 }
