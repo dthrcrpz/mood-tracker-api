@@ -141,7 +141,9 @@ class QuestionController extends Controller
     }
 
     public function history (Request $r) {
-        $answerGroups = AnswerGroup::orderByDesc('created_at')
+        $user = $r->user();
+        $answerGroups = AnswerGroup::where('user_id', $user->id)
+        ->orderByDesc('created_at')
         ->get();
 
         $history = [];
