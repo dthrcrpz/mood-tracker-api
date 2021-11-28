@@ -8,6 +8,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('logout', 'UserController@logout');
     Route::get('user', 'UserController@user')->middleware('auth.api');
 
+    Route::post('forgot-password', 'UserController@forgotPassword')->middleware('auth.api');
+
     Route::post('login/facebook', 'UserController@facebookLogin');
 });
 

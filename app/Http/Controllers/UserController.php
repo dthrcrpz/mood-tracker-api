@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\ForgotPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -66,6 +68,26 @@ class UserController extends Controller
                 'user' => $user,
             ]);
         }
+    }
+
+    public function forgotPassword (Request $r) {
+        $user = User::where('email', $r->email)->first();
+
+        if (!$user) {
+            return response([
+                'errors' => [
+                    'A user with this email address is not found'
+                ]
+            ], 404);
+        }
+
+        $token = str_random(12);
+
+        $user->update([
+            'reset_password_token' => $token
+        ]);
+
+        Mail::to($user->email)->queue(new ForgotPassword($user, $token));
     }
 
     public function login (Request $r) {
