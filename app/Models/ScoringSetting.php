@@ -11,4 +11,5 @@ class ScoringSetting extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['created_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 }
