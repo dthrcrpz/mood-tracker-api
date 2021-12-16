@@ -6,6 +6,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('register', 'UserController@register');
     Route::post('login', 'UserController@login');
     Route::post('logout', 'UserController@logout');
+    Route::get('/', 'UserController@index')->middleware('auth.admin');
     Route::get('user', 'UserController@user')->middleware('auth.api');
 
     Route::post('forgot-password', 'UserController@forgotPassword');
