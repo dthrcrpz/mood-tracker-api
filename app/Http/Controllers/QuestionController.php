@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AnswerGroup;
-use App\Models\Question;
-use App\Models\ScoringSetting;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Question;
+use App\Models\AnswerGroup;
 use Illuminate\Http\Request;
+use App\Models\ScoringSetting;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
@@ -140,8 +141,26 @@ class QuestionController extends Controller
         ]);
     }
 
+    public function userAndHistory (User $user) {
+        $history = $this->getHistory($user);
+
+        return response([
+            'user' => $user,
+            'history' => $history
+        ]);
+    }
+
     public function history (Request $r) {
         $user = $r->user();
+        
+        $history = $this->getHistory($user);
+
+        return response([
+            'history' => $history
+        ]);
+    }
+
+    protected function getHistory ($user) {
         $answerGroups = AnswerGroup::where('user_id', $user->id)
         ->orderByDesc('created_at')
         ->get();
@@ -155,9 +174,7 @@ class QuestionController extends Controller
             array_push($history, $result);
         }
 
-        return response([
-            'history' => $history
-        ]);
+        return $history;
     }
 
     protected function computeAnswerGroup ($answerGroup) {
