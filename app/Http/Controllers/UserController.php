@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function index (Request $r) {
+        $query = ($r->q) ? $r->q : null;
+
+        $users = User::when($query != null, function ($q) use ($query) {
+            $q->where('fullname', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%");
+        })
+        ->get();
+
+        return response([
+            'users' => $users
+        ]);
+    }
+
     public function facebookLogin (Request $r) {
         $validator = Validator::make($r->all(), [
             'email' => 'required',
