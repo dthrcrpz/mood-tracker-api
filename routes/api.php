@@ -51,6 +51,12 @@ Route::group(['prefix' => 'dummies', 'middleware' => 'auth.admin'], function () 
     });
 });
 
+Route::group(['prefix' => 'diaries'], function () {
+    Route::get('/', 'DiaryController@index')->middleware('auth.api');
+    Route::post('/', 'DiaryController@store')->middleware('auth.api');
+    Route::get('{diary}', 'DiaryController@show')->middleware('auth.api');
+});
+
 Route::get('mails-test/{view}', function ($view) {
     return view("mails.$view");
 });
