@@ -188,6 +188,17 @@ class UserController extends Controller
 
     public function user (Request $r) {
         $user = $r->user();
+        $user->load([
+            'answer_groups'
+        ]);
+
+        $user->hasAnswerGroups = false;
+
+        if (count($user->answer_groups) > 0) {
+            $user->hasAnswerGroups = true;
+        }
+
+        unset($user->answer_groups);
 
         if ($user) {
             return response([
