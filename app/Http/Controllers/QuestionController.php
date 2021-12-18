@@ -137,10 +137,11 @@ class QuestionController extends Controller
             }
         }
 
-        $result = $this->computeAnswerGroup($answerGroup)['result'];
+        $result = $this->computeAnswerGroup($answerGroup);
 
         return response([
-            'result' => $result
+            'result' => $result['result'],
+            'score' => $result['averageScore']
         ]);
     }
 
@@ -211,7 +212,8 @@ class QuestionController extends Controller
 
         return [
             'result' => $result,
-            'date' => $date
+            'date' => $date,
+            'averageScore' => $score
         ];
     }
 }
