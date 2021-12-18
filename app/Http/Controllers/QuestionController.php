@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\AnswerGroup;
 use Illuminate\Http\Request;
 use App\Models\ScoringSetting;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
@@ -136,8 +137,10 @@ class QuestionController extends Controller
             }
         }
 
+        $result = $this->computeAnswerGroup($answerGroup)['result'];
+
         return response([
-            'result' => $this->computeAnswerGroup($answerGroup)['result']
+            'result' => $result
         ]);
     }
 
@@ -179,19 +182,28 @@ class QuestionController extends Controller
 
     protected function computeAnswerGroup ($answerGroup) {
         $answerGroup->load([
-            'answers.choice.question'
+            'answers.choice' => function ($q) {
+                $q->orderByDesc('score')
+                ->with([
+                    'question'
+                ]);
+            }
         ]);
 
         $score = 0;
+
         foreach ($answerGroup->answers as $key => $answer) {
             $score += $answer->choice->score;
         }
+
+        $score = $score / count($answerGroup->answers);
 
         $result = null;
 
         foreach ($this->scoringSettings as $key => $scoringSetting) {
             if ($score >= $scoringSetting->score) {
                 $result = $scoringSetting;
+                break;
             }
         }
 
