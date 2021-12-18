@@ -11,7 +11,8 @@ class DiaryController extends Controller
     public function index (Request $r) {
         $user = $r->user();
 
-        $diaries = Diary::where('user_id', $user->id)
+        $diaries = Diary::select('id', 'user_id', 'date')
+        ->where('user_id', $user->id)
         ->orderByDesc('date')
         ->get();
 
