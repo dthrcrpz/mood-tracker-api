@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Mail\ForgotPassword;
+use App\Mail\Welcome;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -180,6 +182,8 @@ class UserController extends Controller
         ]);
 
         $token = $user->createToken('MoodTracker API Grant')->accessToken;
+        
+        Mail::to($user->email)->queue(new Welcome($user));
 
         return response([
         	'token' => $token
