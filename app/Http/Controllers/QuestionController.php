@@ -199,7 +199,11 @@ class QuestionController extends Controller
             $score += $answer->choice->score;
         }
 
-        $score = $score / count($answerGroup->answers);
+        if ($score == 0) {
+            $score = 0;
+        } else {
+            $score = $score / count($answerGroup->answers);
+        }
 
         $result = null;
 
