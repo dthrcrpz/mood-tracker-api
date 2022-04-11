@@ -173,9 +173,11 @@ class QuestionController extends Controller
 
         foreach ($answerGroups as $key => $answerGroup) {
             $result = $this->computeAnswerGroup($answerGroup);
+            if ($result['result'] != null) {
+                array_push($history, $result);
+            }
             // $result->date = $answerGroup->created_at;
             // $result->date = Carbon::parse($answerGroup->created_at)->format('(l) M d, Y - h:i A');
-            array_push($history, $result);
         }
 
         return $history;
