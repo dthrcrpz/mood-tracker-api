@@ -54,6 +54,7 @@ class QuestionController extends Controller
 
         $question = Question::create([
             'question' => $r->question,
+            'rating' => $r->rating,
             'sequence' => ($r->sequence) ? $r->sequence : Question::count() + 1,
         ]);
 
@@ -80,6 +81,7 @@ class QuestionController extends Controller
     public function update (Question $question, Request $r) {
         $validator = Validator::make($r->all(), [
             'question' => 'required',
+            'rating' => 'required',
             'question_sequence' => 'sometimes',
 
             'choice' => 'required',
@@ -96,6 +98,7 @@ class QuestionController extends Controller
 
         $question->update([
             'question' => $r->question,
+            'rating' => $r->rating,
             'sequence' => ($r->sequence) ? $r->sequence : Question::count() + 1,
         ]);
 
